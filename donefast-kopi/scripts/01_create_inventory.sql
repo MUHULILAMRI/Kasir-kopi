@@ -24,13 +24,13 @@ alter table public.products enable row level security;
 alter table public.stock_movements enable row level security;
 
 -- Policy baca untuk semua pengguna terautentikasi
-create policy if not exists "products select for authenticated"
+create policy "products select for authenticated"
   on public.products
   for select
   to authenticated
   using (true);
 
-create policy if not exists "movements select for authenticated"
+create policy "movements select for authenticated"
   on public.stock_movements
   for select
   to authenticated
@@ -38,14 +38,14 @@ create policy if not exists "movements select for authenticated"
 
 -- Policy tulis untuk admin (JWT claim role = 'admin')
 -- Pastikan Anda mengonfigurasi JWT claim 'role' pada Supabase bila perlu.
-create policy if not exists "products write for admin"
+create policy "products write for admin"
   on public.products
   for all
   to authenticated
   using (auth.jwt() ->> 'role' = 'admin')
   with check (auth.jwt() ->> 'role' = 'admin');
 
-create policy if not exists "movements write for admin"
+create policy "movements write for admin"
   on public.stock_movements
   for all
   to authenticated
