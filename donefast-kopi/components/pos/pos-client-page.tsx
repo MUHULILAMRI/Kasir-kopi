@@ -66,9 +66,9 @@ export default function POSClientPage() {
   }
 
   return (
-    <main className="min-h-dvh">
+    <main className="flex flex-col min-h-screen bg-background text-foreground"> {/* Changed to flex-col and min-h-screen */}
       <BrandHeader />
-      <section className="mx-auto max-w-6xl px-4 py-6 md:py-8">
+      <section className="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto w-full"> {/* Added flex-1, max-w-7xl mx-auto w-full */}
         <div className="grid gap-6 md:grid-cols-[1fr_360px]">
           <div className="min-w-0">
             <Tabs value={currentCategory} onValueChange={handleCategoryChange} className="mb-4">
