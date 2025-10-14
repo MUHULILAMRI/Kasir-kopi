@@ -3,11 +3,23 @@
 import { useState } from "react";
 import { mutate } from "swr";
 import { getBrowserSupabase } from "@/lib/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { v4 as uuidv4 } from 'uuid';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { v4 as uuidv4 } from "uuid";
 
 export function AddProductForm() {
   const [loading, setLoading] = useState(false);
@@ -23,7 +35,6 @@ export function AddProductForm() {
     const imageUrl = String(formData.get("imageUrl") || "");
 
     try {
-
       const payload = {
         name: String(formData.get("name") || ""),
         price: Number(formData.get("price") || 0),
@@ -44,7 +55,6 @@ export function AddProductForm() {
 
       await mutate("/api/products");
       event.currentTarget.reset();
-
     } catch (e: any) {
       console.error("[v0] add product error:", e);
       setError(e.message);
@@ -59,22 +69,49 @@ export function AddProductForm() {
         <CardTitle className="text-sm">Tambah Produk Baru</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
           <div className="grid gap-2">
             <Label htmlFor="name">Nama</Label>
             <Input id="name" name="name" placeholder="Espresso" required />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="price">Harga (Rp)</Label>
-            <Input id="price" name="price" type="number" min="0" step="1000" required />
+            <Input
+              id="price"
+              name="price"
+              type="number"
+              min="0"
+              step="1000"
+              required
+            />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="stock">Stok Awal</Label>
-            <Input id="stock" name="stock" type="number" min="0" step="1" defaultValue={0} />
+            <Input
+              id="stock"
+              name="stock"
+              type="number"
+              min="0"
+              step="1"
+              defaultValue={0}
+            />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="category">Kategori</Label>
-            <Input id="category" name="category" placeholder="Coffee" />
+            <Select name="category">
+              <SelectTrigger>
+                <SelectValue placeholder="Pilih kategori" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Coffee">Coffee</SelectItem>
+                <SelectItem value="Non Coffee">Non Coffee</SelectItem>
+                <SelectItem value="Snack">Snack</SelectItem>
+                <SelectItem value="Lainnya">Lainnya</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div className="md:col-span-2 grid gap-2">
             <Label htmlFor="imageUrl">URL Gambar Produk</Label>

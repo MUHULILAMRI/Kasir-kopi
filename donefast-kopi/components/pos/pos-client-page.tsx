@@ -72,11 +72,12 @@ export default function POSClientPage() {
         <div className="grid gap-6 md:grid-cols-[1fr_360px]">
           <div className="min-w-0">
             <Tabs value={currentCategory} onValueChange={handleCategoryChange} className="mb-4">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="all">Semua</TabsTrigger>
                 <TabsTrigger value="Coffee">Kopi</TabsTrigger>
                 <TabsTrigger value="Non Coffee">Non Kopi</TabsTrigger>
                 <TabsTrigger value="Snack">Snack</TabsTrigger>
+                <TabsTrigger value="Lainnya">Lainnya</TabsTrigger>
               </TabsList>
               <TabsContent value={currentCategory}>
                 {loading ? (
